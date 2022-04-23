@@ -1,19 +1,12 @@
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 public class ListFiles {
     private String directory;
     private String extension;
     private File[] files;
 
-    ListFiles(String directory, String extension){
+    public ListFiles(String directory, String extension){
         this.directory = directory;
         this.extension = extension;
     }

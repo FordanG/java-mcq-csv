@@ -9,31 +9,34 @@ public class Main {
         int score = 0;
         int questions = 0;
         double grade = 0;
-        String name = "";
 
         try {
-
 //          Print Welcome Message
             Styles.printDivider();
             welcomeMessage();
             Styles.printDivider();
 
 //          Initialize User Name
+            getUsername();
             System.out.print("Please Enter your Name: ");
             Scanner sc = new Scanner(System.in);
             User user = new User(sc.nextLine());
-            name = user.getName();
+
             Styles.printDivider();
-            System.out.println("Hello, " + name + "! Good luck with the Quiz!" );
+            System.out.println("Hello, " + user.getName() + "! Good luck with the Quiz!" );
             promptEnterKey();
             Styles.printDivider();
 
 //          Initialize CSV File List from questionnaires directory
             ListFiles csvQuestionnaires = new ListFiles("./questionnaires","csv");
+
 //          Get the files
             File[] files = csvQuestionnaires.getFiles();
+
 //          Display File List
             csvQuestionnaires.displayFiles();
+
+//          User Selects a file
             System.out.print("Please Pick a file: ");
             int userMCQ = sc.nextInt();
 
@@ -61,27 +64,24 @@ public class Main {
 
 //              If the answer is correct, add 1 to the score
                 if (questionItem.evaluate(answerCode)){
-                    score++;
+                    user.addScore();
                 }
-
-//              If a questions is read, add 1 question
-                questions++;
             }
             sc.close();
-            grade = evaluateGrade(score,questions);
+            user.evaluateGrade(MCQ.getCount());
+
+            System.out.println(user.getName() + ", you answered " + user.getScore() + " Questions Right, " + (MCQ.getCount()-user.getScore()) + " Questions Wrong for a Total of " + MCQ.getCount() + " questions.");
+            System.out.println("You scored " + (int)user.getGrade() + "%");
         }
         catch(IOException e) {
             e.printStackTrace();
         }
-        System.out.println(name + ", you answered " + score + " Questions Right, " + (questions-score) + " Questions Wrong for a Total of " + questions + " questions.");
-        System.out.println("You scored " + (int)grade + "%");
+
     }
 
-    static double evaluateGrade( int score, int questions){
-        return Math.round((double)score/questions * 100);
-    }
 
-    public void getUsername(){
+
+    public static void getUsername(){
         System.out.println("Please Enter your Name:");
         Scanner sc = new Scanner(System.in);
         User user = new User(sc.nextLine());
@@ -96,4 +96,5 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
+
 }

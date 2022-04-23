@@ -1,27 +1,21 @@
 public class MCQ implements Question {
-
+    static int count;
     private String question;
     private String[] options;
     private String answer;
     private String item;
 
-    MCQ(String[] question){
+    public MCQ(String[] question){
         this.item = question[0];
         this.question = question[1];
         this.options = new String[] {question[2],question[3],question[4],question[5]};
         this.answer = question[6];
+        count++;
     }
 
-    @Override
-    public void setQuestion(String question){
-        this.question = question;
+    public static int getCount() {
+        return count;
     }
-
-    @Override
-    public String getQuestion(){
-        return question;
-    }
-
     @Override
     public void setOptions(String[] options){
         this.options = options;

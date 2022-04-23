@@ -1,32 +1,28 @@
+import java.util.Scanner;
+
 public class User {
     private String name;
     private double grade = 0;
+    private int score = 0;
 
-    User(String name, double grade){
+    public User(String name, double grade){
         this.name = name;
         this.grade = grade;
     }
 
-    User(String name){
+    public User(String name){
         this.name = name;
     }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
 
     public String getName(){
         return name;
     }
 
-    public void setGrade(double grade){
-        this.grade = grade;
-    }
-
     public double getGrade(){
         return grade;
     }
+    
+    public int getScore(){return score;}
 
     public void displayName(){
         System.out.println(name);
@@ -34,6 +30,19 @@ public class User {
 
     public void displayGrade(){
         System.out.println(grade);
+    }
+
+    public void addScore(){
+        score++;
+    }
+
+    public static void userSelect(){
+
+    }
+
+    public void evaluateGrade(int questions){
+
+        this.grade = Math.round((double)score/questions * 100);
     }
 
 }

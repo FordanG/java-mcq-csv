@@ -41,7 +41,6 @@ public class User {
     }
 
     public void evaluateGrade(int questions){
-
         this.grade = Math.round((double)score/questions * 100);
     }
 

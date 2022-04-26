@@ -7,9 +7,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 //          Print Welcome Message
-            Styles.printDivider();
             welcomeMessage();
-            Styles.printDivider();
 
 //          Initialize User Name
             System.out.print("Please Enter your Name: ");
@@ -20,30 +18,30 @@ public class Main {
             Styles.printDivider();
             System.out.println("Hello, " + user.getName() + "! Good luck with the Quiz!" );
             promptEnterKey();
-            Styles.printDivider();
 
 //          Initialize CSV File List from questionnaires directory
-            ListFiles csvQuestionnaires = new ListFiles("./questionnaires","csv");
+            ListMCQSets csvQuestionnaires = new ListMCQSets("./questionnaires","csv");
 
 //          Get the files
-            File[] files = csvQuestionnaires.getFiles();
+            File[] files = csvQuestionnaires.getMCQSets();
 
 //          Display File List
-            csvQuestionnaires.displayFiles();
+            csvQuestionnaires.displayMenu();
 
 //          User Selects a file
-            System.out.print("Please Pick a file: ");
-            int userMCQ = sc.nextInt();
+            System.out.println("Please Pick a file. ");
+            System.out.print("Input the number of your choice: ");
+            int selectedMCQSet = sc.nextInt();
 
 //          Get the path and file name of the selected file
-            String filePath = files[userMCQ-1].getAbsolutePath();
-            String fileName = ListFiles.removeFileExtension(files[userMCQ-1].getName(),true);
+            String filePath = files[selectedMCQSet-1].getAbsolutePath();
+            String fileName = ListMCQSets.removeFileExtension(files[selectedMCQSet-1].getName(),true);
 
 //          Diplay what the user has selected
             Styles.printDivider();
             System.out.println("You have selected: " + fileName);
             promptEnterKey();
-            Styles.printDivider();
+
 
             //parsing a CSV file into Scanner class constructor
             Scanner fr = new Scanner(new FileReader(filePath));
@@ -59,10 +57,10 @@ public class Main {
 
 //              Print out the question, together with the options
                 System.out.print(MCQ.getCount() + ". ");
-                questionItem.display();
+                questionItem.displayItem();
 
 //              Get answer from user
-                System.out.print("Enter answer: ");
+                System.out.print("Enter answer (number of your choice): ");
                 int answerCode = sc.nextInt();
 
 //              Evaluate answer and if the answer is correct, add 1 to the User score
@@ -71,6 +69,7 @@ public class Main {
                 }
             }
             sc.close();
+            fr.close();
 
 //          Once the exam is finished, compute the grade of the user
             user.evaluateGrade(MCQ.getCount());
@@ -87,11 +86,14 @@ public class Main {
     }
 
     static void welcomeMessage(){
+        Styles.printDivider();
         System.out.println("Welcome to the MCQ Test Taker");
+        Styles.printDivider();
     }
 
     public static void promptEnterKey(){
         System.out.print("\n\nPress \"ENTER\" to continue...");
+        Styles.printDivider();
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
